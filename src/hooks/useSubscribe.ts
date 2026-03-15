@@ -11,13 +11,23 @@ export function useSubscribe() {
     setLoading(true);
     setError(null);
     try {
-      if (!process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL) {
-        throw new Error("Webhook URL is missing");
+      // Call our local MongoDB backend
+      const response = await axios.post("/api/subscribe", payload);
+      
+      // We can also still call n8n if needed, but for now we focus on the requested backend
+      if (process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL && process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL !== "your_n8n_webhook_url_here") {
+        try {
+          await axios.post(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL, payload);
+        } catch (n8nErr) {
+          console.error("n8n sync failed:", n8nErr);
+          // Don't fail the whole request if n8n fails but DB succeeded
+        }
       }
-      await axios.post(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL, payload);
+      
       setSuccess(true);
     } catch (err: any) {
-      setError("Something went wrong. Please try again.");
+      const message = err.response?.data?.error || "Something went wrong. Please try again.";
+      setError(message);
     } finally {
       setLoading(false);
     }
