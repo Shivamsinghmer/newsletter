@@ -14,7 +14,15 @@ export async function POST(request: Request) {
       );
     }
 
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (connError: any) {
+      console.error("MongoDB Connection Error:", connError.message);
+      return NextResponse.json(
+        { error: "Database connection failed. Please ensure environment variables are set." },
+        { status: 500 }
+      );
+    }
 
     // Check if subscriber already exists
     const existingSubscriber = await Subscriber.findOne({ email });
@@ -45,7 +53,7 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error("Subscription error:", error);
+    console.error("Subscription API execution error:", error);
     
     if (error.code === 11000) {
       return NextResponse.json(
@@ -55,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { error: "Failed to subscribe. Please try again later." },
+      { error: `Internal Server Error: ${error.message || "Unknown error"}` },
       { status: 500 }
     );
   }

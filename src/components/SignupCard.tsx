@@ -153,14 +153,14 @@ export default function SignupCard({ topics, toggleTopic, setTopics, onSuccess }
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="font-sans font-light text-sm w-full h-11 pl-4 pr-11 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 appearance-none text-foreground transition-all"
+                  className="font-sans font-light text-sm w-full h-11 pl-4 pr-11 bg-muted/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 appearance-none text-foreground transition-all [&>option]:bg-card [&>option]:text-foreground"
                 >
-                  <option value="" disabled>Founder, Marketer, or Builder?</option>
-                  <option value="Founder">Founder / Brand Owner</option>
-                  <option value="Marketer">Marketer / Copywriter</option>
-                  <option value="Service Provider">Service Provider</option>
-                  <option value="Creator">Content Creator</option>
-                  <option value="Other">Other</option>
+                  <option value="" disabled className="bg-card text-foreground">Founder, Marketer, or Builder?</option>
+                  <option value="Founder" className="bg-card text-foreground">Founder / Brand Owner</option>
+                  <option value="Marketer" className="bg-card text-foreground">Marketer / Copywriter</option>
+                  <option value="Service Provider" className="bg-card text-foreground">Service Provider</option>
+                  <option value="Creator" className="bg-card text-foreground">Content Creator</option>
+                  <option value="Other" className="bg-card text-foreground">Other</option>
                 </select>
               </div>
 
