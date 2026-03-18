@@ -1,26 +1,19 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, DM_Sans, DM_Serif_Display } from "next/font/google";
+import { Fjalla_One, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const fjallaOne = Fjalla_One({
   subsets: ["latin"],
-  variable: "--font-serif",
-  weight: ["400", "700", "800", "900"],
-  style: ["normal", "italic"],
-});
-
-const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
+  weight: "400",
   variable: "--font-display",
-  weight: ["400"],
-  style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
+const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-body",
 });
+
 
 export const metadata: Metadata = {
   title: "The Daily Brief",
@@ -33,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${dmSerif.variable} ${dmSans.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${fjallaOne.variable} ${robotoSlab.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -49,7 +42,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased min-h-screen">
+
         {children}
       </body>
     </html>

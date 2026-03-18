@@ -3,35 +3,37 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t border-border py-12 px-6 md:px-8 pb-32 md:pb-12 text-center md:text-left">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:items-start text-center md:text-left">
-        <div className="flex flex-col items-center md:items-start gap-4">
-          <div className="flex items-center gap-2">
-            <Mail className="h-5 w-5 text-primary" />
-            <span className="font-display italic text-xl text-foreground tracking-tight uppercase whitespace-nowrap">
-              The Daily Brief
-            </span>
-          </div>
-          <p className="text-muted-foreground/50 text-xs max-w-[200px] leading-relaxed hidden md:block">
-            AI Personalized News · Delivered to your Gmail every morning at 6:00 AM.
-          </p>
-        </div>
+    <footer className="bg-brand-black border-t border-white/10 relative pb-20 md:pb-0">
+      {/* Subtle amber glow at top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-brand-amber/40" />
 
-        <div className="flex flex-col items-center text-muted-foreground text-sm font-sans font-light max-w-xs gap-2">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center py-8 px-4 md:px-12 gap-4 md:gap-0 text-center md:text-left">
+        {/* Left: small text */}
+        <div className="font-mono text-xs text-white text-center md:text-left order-3 md:order-1">
           <span>© {new Date().getFullYear()} The Daily Brief.</span>
-          <span className="text-muted-foreground/60 text-xs text-center">
-            All rights reserved. Designed for builders.
-          </span>
-          <span className="text-muted-foreground/40 text-[10px] md:hidden">
-            AI Personalized News · Delivered to your Gmail
+          <br />
+          <span className="text-white/60">Designed for the 1% who build.</span>
+        </div>
+
+        {/* Center: logo */}
+        <div className="flex items-center justify-center gap-2 order-1 md:order-2">
+          <div className="bg-brand-amber p-1.5 rounded-none">
+            <Mail className="h-4 w-4 text-brand-black" />
+          </div>
+          <span className="font-display font-bold text-white text-xl tracking-tighter uppercase">
+            The Daily Brief
           </span>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 text-xs md:text-sm text-foreground/80 font-sans font-medium">
-          <Link href="#" className="hover:text-primary transition-colors uppercase tracking-[0.1em]">
-            Privacy Policy
+        {/* Right: nav links */}
+        <div className="font-mono text-xs text-white flex gap-6 justify-center md:justify-end order-2 md:order-3">
+          <Link href="#" className="hover:text-brand-amber transition-colors">
+            Privacy
           </Link>
-          <Link href="#" className="hover:text-primary transition-colors uppercase tracking-[0.1em]">
+          <Link href="#" className="hover:text-brand-amber transition-colors">
+            Terms
+          </Link>
+          <Link href="#" className="hover:text-brand-amber transition-colors">
             Unsubscribe
           </Link>
         </div>

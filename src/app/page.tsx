@@ -44,11 +44,7 @@ export default function Home() {
           toggleTopic={toggleTopic} 
         />
         <StatsBanner />
-        <FinalCTA 
-          topics={selectedTopics} 
-          scrollToTopics={scrollToTopics} 
-          onSuccess={() => setIsSubscribed(true)}
-        />
+        <FinalCTA />
       </main>
       <Footer />
       <MobileStickyBar isSubscribed={isSubscribed} />

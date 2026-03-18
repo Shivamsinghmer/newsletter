@@ -1,30 +1,64 @@
-import FadeInSection from "./FadeInSection";
+"use client";
+
+import { animate } from "framer-motion";
+import { useEffect, useRef, Fragment } from "react";
+
+function Counter({ value, duration = 2 }: { value: string; duration?: number }) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const numberStr = value.replace(/,/g, "");
+  const number = parseFloat(numberStr);
+  const suffix = value.replace(/[0-9,.]/g, "");
+  
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (!node) return;
+
+    const count = animate(0, number, {
+      duration: duration,
+      onUpdate: (latest) => {
+        node.textContent = Math.floor(latest).toLocaleString() + suffix;
+      },
+    });
+
+    return () => count.stop();
+  }, [number, suffix, duration]);
+
+  return <span ref={nodeRef}>0</span>;
+}
 
 export default function StatsBanner() {
   const stats = [
-    { value: "12,000+", label: "SUBSCRIBERS" },
-    { value: "6:00 AM", label: "DAILY DELIVERY" },
-    { value: "100%", label: "FREE FOREVER" },
-    { value: "11 Topics", label: "TO CHOOSE FROM" },
-    { value: "AI Powered", label: "CURATION" }
+    { value: "12,000+", label: "SUBSCRIBERS", isCount: true },
+    { value: "6:00 AM IST", label: "DELIVERY", isCount: false },
+    { value: "100%", label: "FREE", isCount: true },
+    { value: "11", label: "TOPICS", isCount: true },
+    { value: "24/7", label: "AI AGENTS", isCount: false }
   ];
 
   return (
-    <section className="bg-background border-y border-border py-8 md:py-12 px-4 shadow-sm relative z-10">
-      <FadeInSection className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-y-8 md:gap-y-0 md:gap-4 lg:gap-0 lg:divide-x divide-border">
+    <section id="stats" className="bg-brand-black border-y border-brand-amber/20 py-10 md:py-16 px-4 md:px-8 relative z-20">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center md:justify-center gap-6 md:gap-0 w-full">
           {stats.map((stat, i) => (
-            <div key={i} className={`flex flex-col items-center justify-center text-center px-2 md:px-4 ${i === 4 && 'col-span-2 lg:col-span-1'}`}>
-              <h3 className="font-display italic text-2xl sm:text-3xl lg:text-4xl text-foreground mb-1 md:mb-2 whitespace-nowrap">
-                {stat.value}
-              </h3>
-              <p className="font-sans font-semibold text-[8px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.15em] md:tracking-[0.2em] text-center">
-                {stat.label}
-              </p>
-            </div>
+            <Fragment key={i}>
+              <div className="flex flex-col items-center min-w-0 md:min-w-[130px] text-center">
+                <h3 
+                  className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-brand-amber whitespace-nowrap"
+                  style={{ filter: 'drop-shadow(0 0 20px rgba(245,166,35,0.3))' }}
+                >
+                  {stat.isCount ? <Counter value={stat.value} /> : stat.value}
+                </h3>
+                <p className="font-mono text-[9px] sm:text-[10px] md:text-xs uppercase tracking-widest text-brand-cream/40 mt-1 md:mt-2">
+                  {stat.label}
+                </p>
+              </div>
+              {i < stats.length - 1 && (
+                <div className="w-px h-10 bg-brand-amber/30 self-center mx-4 hidden md:block" />
+              )}
+            </Fragment>
           ))}
         </div>
-      </FadeInSection>
+      </div>
     </section>
   );
 }
